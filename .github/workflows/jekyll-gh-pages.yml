@@ -1,26 +1,35 @@
-name: Deploy GH Pages
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+# Please not that any code like this --yourAppName-- means that it will be either customized
+# by Azure or should by entered according to you
 
-on: push
+name: Build and deploy Node.js app to Azure Web App - --yourAppRepoName--
+
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
+    - uses: actions/checkout@master
 
-      - name: Install
-        run: yarn
+    - name: Set up Node.js version
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
 
-      - name: Build
-        run: yarn build
-
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          folder: dist
+    - name: npm install, build, and test
+      run: |
+        npm install
+        npm run build --if-present --passWithNoTests
+    - name: 'Deploy to Azure Web App'
+      uses: azure/webapps-deploy@v1
+      with:
+        app-name: --yourAppName--
+        slot-name: 'production'
+        publish-profile: --yourPublishProfile--
+        package: ./build
