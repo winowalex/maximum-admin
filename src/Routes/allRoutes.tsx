@@ -205,6 +205,7 @@ const authProtectedRoutes = [
     // Dashboard
     { path: "/dashboard", component: <Ecommerce /> },
     { path: "/", exact: true ,component: <Navigate to="/dashboard" /> },
+    { path: "https://winowalex.github.io/maximum-admin/", component: <Navigate to="/dashboard" /> },
     { path: "*", component: <Navigate to="/dashboard" /> },
 
     { path: "/dashboard-analytics", name : "Analytics Dashboard" ,component: <Analytics /> },
